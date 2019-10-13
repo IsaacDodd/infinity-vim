@@ -1,0 +1,51 @@
+###########################################################################
+#                            General Snippets                             #
+###########################################################################
+#
+#
+# References:
+#	https://github.com/honza/vim-snippets/
+# 	https://castel.dev
+
+
+# Signature Line: Add a signature and place the cursor at the name position.
+snippet sign "Signature"
+	Sincerely,
+
+	$0
+endsnippet
+
+#########
+# DATES #
+#########
+# Today's Date: Insert today's date.
+snippet dateymd "YYYY-MM-DD" w
+`!v strftime("%Y-%m-%d")`
+endsnippet
+
+snippet datemdy "MM-DD-YYYY" w
+`!v strftime("%m-%d-%Y")`
+endsnippet
+
+snippet datehr "Month DD, YYYY (Human Readable)" w
+`!v strftime("%b %d, %Y")`
+endsnippet
+
+snippet datetime "YYYY-MM-DD hh:mm" w
+`!v strftime("%Y-%m-%d %H:%M")`
+endsnippet
+
+snippet time "hh:mm" w
+`!v strftime("%H:%M")`
+endsnippet
+
+#########
+# BOXES #
+#########
+# Draw a Box: Typing text results in box-imitating characters drawn around it.
+### snippet boxl "Box: With Lines"
+### 	`!p snip.rv = '┌' + '─' * (len(t[1]) + 2) + '┐'`
+### 	│ $1 │
+### 	`!p snip.rv = '└' + '─' * (len(t[1]) + 2) + '┘'`
+### 	$0
+### endsnippet

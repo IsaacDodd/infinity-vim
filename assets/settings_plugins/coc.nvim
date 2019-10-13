@@ -1,0 +1,222 @@
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => coc.nvim plugin (Auto-Completion)
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+if g:vimsetup_autocompletion=='coc.nvim'
+
+	""" AutoCompletion Settings: ------------------------------------------------------------
+
+	" Set Hidden: If hidden is not set, TextEdit might fail.
+	set hidden
+	" Update Time Interval: for Cursorhold and CursorHold (default: 4000)
+	set updatetime=300
+	" Short Message: Avoids a hit-enter prompt caused by file messages via adding the 'c' flag: don't give |ins-completion-menu| messages
+	set shortmess+=c
+	set signcolumn=yes
+
+	""" Completion Trigger: ------------------------------------------------------------
+
+	" Backspace Function:
+	function! s:check_back_space() abort
+		let col = col('.') - 1
+		return !col || getline('.')[col - 1] =~# '\s'
+	endfunction
+
+	"""" Text Completion Trigger: Use Tab to trigger auto-completions in front of characters and to navigate the list
+	" Use <tab> to trigger completion
+	" 	Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugins
+	inoremap <silent><expr> <Tab>
+		\ pumvisible() ? "\<C-n>" :
+		\ <SID>check_back_space() ? "\<Tab>" :
+		\ coc#refresh()
+	inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+		" Completion Navigation:
+	" 	(1) Navigate with tab and s-tab
+	inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+	inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+
+	" 	(2) Also use ctrl-j, ctrl-k for selecting omni completion entries -- Reference: [https://github.com/tom-james-watson/dotfiles/blob/master/.vimrc]
+	inoremap <expr> <C-j> pumvisible() ? '<C-n>' : ''
+	inoremap <expr> <C-k> pumvisible() ? '<C-p>' : ''
+	" Use <c-space> to trigger completion
+	inoremap <silent><expr> <c-space> coc#refresh()
+
+	"""" Coc-Snippet Trigger: Trigger completions the same way as VSCode (Select the first item available)
+	"" inoremap <silent><expr> <TAB>
+	"" 			\ pumvisible() ? coc#_select_confirm() :
+	"" 			\ coc#expandableOrJumpable() ? "\<C-r>=coc#rpc#request('doKeymap', ['snippets-expand-jump',''])\<CR>" :
+	"" 			\ <SID>check_back_space() ? "\<TAB>" :
+	"" 			\ coc#refresh()
+	"" let g:coc_snippet_next = '<tab>'
+
+	" Use <C-l> to trigger snippet expansion.
+	imap <C-l> <Plug>(coc-snippets-expand)
+
+	"" " Use <C-j> to select text for visual placeholder of snippet.
+	"" vmap <C-j> <Plug>(coc-snippets-select)
+
+	"" " Use <C-j> to jump to next placeholder, it's the default for coc.nvim
+	"" let g:coc_snippet_next = '<c-j>'
+
+	"" " Use <C-k> for jump to previous placeholder, it's the default for coc.nvim
+	"" let g:coc_snippet_prev = '<c-k>'
+
+	"" " Use <C-j> for both expand and jump (make expand higher priority.)
+	"" imap <C-j> <Plug>(coc-snippets-expand-jump)
+
+	" ---------
+
+	" Completion Confirmation: Use enter to confirm complete; Press Enter (<Cr> is for carriage return> to confirm completion selected)
+	"	Use <cr> to confirm completion, `<C-g>u` means break undo chain at current position. Coc only does snippet completion and additional edits when confirmed.
+
+	" (1) Basic confirmation functionality
+	" inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+
+	" (2) Make coc.nvim aware of <Cr>'s: Notify coc.nvim that `<enter>` has been pressed.
+	inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
+				\: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+
+	" 	Close preview window when completion is done -- Reference: [https://gitlab.com/quebin31/dotfiles/blob/master/nvim/.config/nvim/plugins/coc.vim]
+	" 		This line makes coc.nvim close the menu after a <tab> so that another <tab> inserts a normal tab character instead of stalling the cursor.
+	autocmd! CompleteDone * if pumvisible() == 0 | pclose | endif
+
+	""" Style: ------------------------------------------------------------
+
+	" Make coc highlighting less obnoxious
+	highlight CocErrorSign      ctermfg=203 guifg=#FF6E6E
+	highlight CocWarningSign    ctermfg=215 guifg=#FFB86C
+	highlight CocHintSign       ctermfg=142 guifg=#ABB2BF
+	highlight CocInfoSign       ctermfg=239 guifg=#44475A
+	highlight CocHighlightRead  ctermbg=0   guibg=#1F1F1F
+	highlight CocHighlightWrite ctermbg=0   guibg=#1F1F1F
+	" highlight link CocErrorHighlight    NONE
+	highlight link CocWarningHighlight  NONE
+	highlight link CocInfoHighlight     NONE
+	highlight link CocHintHighligh      NONE
+
+	""" Key Mappings: ------------------------------------------------------------
+
+	" Documentation Preview: Use K to show documentation in preview window
+	function! s:show_documentation()
+		if (index(['vim','help'], &filetype) >= 0)
+			execute 'h '.expand('<cword>')
+		else
+			call CocAction('doHover')
+		endif
+	endfunction
+	" Use K to show documentation in preview window
+	nnoremap <silent> K :call <SID>show_documentation()<CR>
+	" Look up documentation for word under cursor
+	nmap <Leader>k :call <SID>cocAction('doHover')<CR>
+
+	" Navigation:
+	" Do default action for next item.
+	nnoremap <silent> <leader>cj :<C-u>CocNext<CR>
+	" Do default action for previous item.
+	nnoremap <silent> <leader>ck :<C-u>CocPrev<CR>
+	" Remap keys for gotos
+	nmap <silent> cgd <Plug>(coc-definition)
+	nmap <silent> cgy <Plug>(coc-type-definition)
+	nmap <silent> cgi <Plug>(coc-implementation)
+	nmap <silent> cgr <Plug>(coc-references)
+
+	" Use `[c` and `]c` to navigate diagnostics
+	nmap <silent> [c <Plug>(coc-diagnostic-prev)
+	nmap <silent> ]c <Plug>(coc-diagnostic-next)
+
+	" Reformatting:
+	" Remap for rename current word
+	nmap <leader>crn <Plug>(coc-rename)
+	" Remap for format selected region
+	xmap <leader>ct <Plug>(coc-format-selected)
+	nmap <leader>ct <Plug>(coc-format-selected)
+	" Remap for do codeAction of current line
+	nmap <leader>ca  <Plug>(coc-codeaction)
+	" Remap for do codeAction of selected region
+	xmap <Leader>cs <Plug>(coc-codeaction-selected)
+	nmap <Leader>cs <Plug>(coc-codeaction-selected)
+	" Fix autofix problem of current line
+	nmap <leader>cf  <Plug>(coc-fix-current)
+	" Create mappings for function text object, requires document symbols feature of languageserver.
+	xmap cif <Plug>(coc-funcobj-i)
+	xmap caf <Plug>(coc-funcobj-a)
+	omap cif <Plug>(coc-funcobj-i)
+	omap caf <Plug>(coc-funcobj-a)
+
+	" Plugin Management: Using CocList
+	" Show CocLists
+	nnoremap <silent> <leader>cll  :<C-u>CocList<cr>
+	" Show all diagnostics
+	nnoremap <silent> <leader>cld  :<C-u>CocList diagnostics<cr>
+	" Manage extensions
+	nnoremap <silent> <leader>cle  :<C-u>CocList extensions<cr>
+	" Show commands
+	nnoremap <silent> <leader>clc  :<C-u>CocList commands<cr>
+	" Find symbol of current document
+	nnoremap <silent> <leader>clo  :<C-u>CocList outline<cr>
+	" Search workspace symbols
+	nnoremap <silent> <leader>cls  :<C-u>CocList -I symbols<cr>
+	" Resume latest coc list
+	nnoremap <silent> <leader>clr  :<C-u>CocListResume<CR>
+	" References: [https://github.com/L0stLink/anvil/blob/master/settings/coc.vim]
+
+	""" Extension Settings: ------------------------------------------------------------
+
+	"" coc-pairs:
+	" Vim - Uses the " character as a comment character
+	autocmd FileType vim let b:coc_pairs_disabled = ['"']
+	" LaTeX - Pair a symbol or equation type
+	autocmd FileType tex let b:coc_pairs = [["$", "$"]]
+	" Stata - Uses the ` and ' characters to define a macro (i.e., `macroname')
+	autocmd FileType stata let b:coc_pairs = [["`", "'"]]
+	" autocmd FileType stata let b:coc_pairs_disabled = ["`", "'"]
+
+	""" Language Server Settings: ------------------------------------------------------------
+
+	if executable('go')
+		autocmd BufWritePre *.go :call CocAction('runCommand', 'editor.action.organizeImport')
+	endif
+
+
+	""" Other Settings: ------------------------------------------------------------
+	"" Format: Use `:Format` to format current buffer
+	"command! -nargs=0 Format :call CocAction('format')
+	"" Fold: Use `:Fold` to fold current buffer
+	"command! -nargs=? Fold :call     CocAction('fold', <f-args>)
+
+	"" Highlight: Highlight symbol under cursor on CursorHold
+	"autocmd CursorHold * silent call CocActionAsync('highlight')
+
+	"augroup CocFiletypeFormats
+	"	autocmd!
+	"	" Setup formatexpr specified filetype(s).
+	"	autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
+	"	" Update signature help on jump placeholder
+	"	autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
+	"augroup end
+
+	"" " Trigger Completion: Use Ctrl-<space>
+	"" inoremap <silent><expr> <C-Space> coc#refresh()
+	"" " Trigger Completion Within Text: Use Tab to trigger auto-completions in front of characters and to navigate the list
+	"" " Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugins
+	"" inoremap <silent><expr> <TAB>
+	"" 	  \ pumvisible() ? "\<C-n>" :
+	"" 	  \ <SID>check_back_space() ? "\<TAB>" :
+	"" 	  \ coc#refresh()
+	"" "inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+	"" function! s:check_back_space() abort
+	"" 	let col = col('.') - 1
+	"" 	return !col || getline('.')[col - 1]  =~# '\s'
+	"" endfunction
+	""
+	"" " Navigate Selections: use ctrl-j, ctrl-k for selecting omni completion entries -- Reference: [https://github.com/tom-james-watson/dotfiles/blob/master/.vimrc]
+	"" inoremap <expr> <C-j> pumvisible() ? '<C-n>' : ''
+	"" inoremap <expr> <C-k> pumvisible() ? '<C-p>' : ''
+
+	"" " Confirm Completion: Press Enter (<Cr> is for carriage return> to confirm completion selected
+	"" " Use <cr> to confirm completion, `<C-g>u` means break undo chain at current position.
+	"" " Coc only does snippet completion and additional edits when confirmed.
+	"" inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+
+	"" End of Configuration Settings
+
+endif

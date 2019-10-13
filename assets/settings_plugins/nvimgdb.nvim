@@ -1,0 +1,34 @@
+""""""""""""""""""""""""""""""""""""""""""""""""""
+" => nvim-gdb plugin
+""""""""""""""""""""""""""""""""""""""""""""""""""
+
+if &runtimepath =~ 'nvim-gdb'
+	"""" function! NvimGdbNoTKeymaps()
+	"""" 	tnoremap <silent> <buffer> <esc> <c-\><c-n>
+	"""" endfunction
+	"""" let g:nvimgdb_config_override = {
+	""""   \ 'key_next': 'dn',
+	""""   \ 'key_step': 'ds',
+	""""   \ 'key_finish': 'df',
+	""""   \ 'key_continue': 'dc',
+	""""   \ 'key_until': 'du',
+	""""   \ 'key_breakpoint': 'db',
+	""""   \ 'set_tkeymaps': "NvimGdbNoTKeymaps",
+	""""   \ }
+	"" let g:nvimgdb_disable_start_keymaps = 0
+
+	"" let g:nvimgdb_config = {
+	"" 			\ 'key_until':      '<f4>',
+	"" 			\ 'key_continue':   '<f5>',
+	"" 			\ 'key_next':       '<f10>',
+	"" 			\ 'key_step':       '<f11>',
+	"" 			\ 'key_finish':     '<f12>',
+	"" 			\ 'key_breakpoint': '<f8>',
+	"" 			\ 'key_frameup':    '<c-p>',
+	"" 			\ 'key_framedown':  '<c-n>',
+	"" 			\ 'key_eval':       '<f9>',
+	"" 			\ 'set_tkeymaps':   function('nvimgdb#keymaps#SetT'),
+	"" 			\ 'set_keymaps':    function('nvimgdb#keymaps#Set'),
+	"" 			\ 'unset_keymaps':  function('nvimgdb#keymaps#Unset'),
+	"" 			\ }
+endif

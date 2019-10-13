@@ -1,0 +1,23 @@
+
+
+snippet beg "begin{} / end{}" bA
+\begin{$1}
+	$0
+\end{$1}
+endsnippet
+
+snippet equation "begin{equation} / end{equation}" bA
+\documentclass{standalone}
+	\usepackage{amsmath}
+\begin{document}
+	\begin{equation}
+		$0
+	\end{equation}
+\end{document}
+endsnippet
+
+snippet dm "Math" wA
+\[
+$1
+.\] $0
+endsnippet

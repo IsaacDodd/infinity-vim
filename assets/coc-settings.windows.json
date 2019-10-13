@@ -1,0 +1,236 @@
+{
+	"languageserver": {
+		"bash": {
+			"command": "bash-language-server.cmd",
+			"enable": false,
+			"args": ["start"],
+			"filetypes": ["sh"],
+			"ignoredRootPaths": ["~"]
+		},
+		"dockerfile": {
+			"command": "docker-langserver",
+			"enable": false,
+			"filetypes": ["dockerfile"],
+			"args": ["--stdio"]
+		},
+		"rust":{
+			"command": "ra_lsp_server",
+			"enable": false,
+			"filetypes": ["rust"],
+			"rootPatterns": ["Cargo.toml"],
+			"revealOutputChannelOn": "error",
+			"trace.server": "off"
+		},
+		"go": {
+			"command": "gopls",
+			"enable": false,
+			"rootPatterns": ["go.mod", ".vim/", ".git/", ".hg/"],
+			"filetypes": ["go"]
+		},
+		"golang": {
+			"command": "go-langserver",
+			"enable": false,
+			"filetypes": ["go"],
+			"initializationOptions": {
+				"gocodeCompletionEnabled": true,
+				"diagnosticsEnabled": true,
+				"lintTool": "golint"
+			}
+		},
+		"ccls": {
+			"command": "ccls",
+			"enable": false,
+			"filetypes": ["c", "cpp", "cuda", "objc", "objcpp"],
+			"rootPatterns": [".ccls", "compile_commands.json", ".vim/", ".git/", ".hg/"],
+			"initializationOptions": {
+				"cache": {
+					"directory": ".ccls-cache"
+				},
+				"highlight": { "lsRanges" : true }
+			}
+		},
+		"clangd": {
+			"command": "clangd",
+			"enable": false,
+			"args": ["--background-index"],
+			"rootPatterns": ["compile_flags.txt", "compile_commands.json", ".vim/", ".git/", ".hg/"],
+			"filetypes": ["c", "cpp", "objc", "objcpp"]
+		},
+		"efm": {
+			"command": "efm-langserver",
+			"enable": false,
+			"args": ["-c", "$APPDATA/efm-langserver/config.yaml"],
+			"filetypes": ["vim", "eruby", "markdown"]
+		},
+		"sorbet": {
+			"command": "srb",
+			"enable": false,
+			"args": ["tc", "--lsp", "--enable-all-experimental-lsp-features"],
+			"filetypes": ["ruby"],
+			"rootPatterns": ["sorbet/config"],
+			"initializationOptions": {},
+			"settings": {}
+		},
+		"intelephense": {
+			"command": "intelephense",
+			"enable": false,
+			"args": ["--stdio"],
+			"filetypes": ["php"],
+			"initializationOptions": {
+				"storagePath": "$TMP/intelephense"
+			}
+		},
+		"python": {
+			"command": "python",
+			"enable": false,
+			"args": [
+				"-mpyls",
+				"-vv",
+				"--log-file",
+				"$TMP/lsp_python.log"
+			],
+			"trace.server": "verbose",
+			"filetypes": [
+				"python"
+			],
+			"settings": {
+				"pyls": {
+					"enable": true,
+					"trace": {
+						"server": "verbose"
+					},
+					"commandPath": "",
+					"configurationSources": [
+						"pycodestyle"
+					],
+					"plugins": {
+						"jedi_completion": {
+							"enabled": true
+						},
+						"jedi_hover": {
+							"enabled": true
+						},
+						"jedi_references": {
+							"enabled": true
+						},
+						"jedi_signature_help": {
+							"enabled": true
+						},
+						"jedi_symbols": {
+							"enabled": true,
+							"all_scopes": true
+						},
+						"mccabe": {
+							"enabled": true,
+							"threshold": 15
+						},
+						"preload": {
+							"enabled": true
+						},
+						"pycodestyle": {
+							"enabled": true
+						},
+						"pydocstyle": {
+							"enabled": false,
+							"match": "(?!test_).*\\.py",
+							"matchDir": "[^\\.].*"
+						},
+						"pyflakes": {
+							"enabled": true
+						},
+						"rope_completion": {
+							"enabled": true
+						},
+						"yapf": {
+							"enabled": true
+						}
+					}
+				}
+			}
+		}
+	},
+	"coc.preferences.hoverTarget": "float",
+	"coc.preferences.extensionUpdateCheck": "weekly",
+	"coc.preferences.formatOnType": false,
+	"coc.preferences.formatOnSaveFiletypes": ["markdown", "css", "javascript", "typescript", "typescriptreact", "json", "javascriptreact", "typescript.tsx"],
+	"codeLens.enable": true,  
+	"diagnostic.enable": false,
+	"diagnostic.displayByAle": true,
+	"diagnostic.virtualText": true,  
+	"diagnostic.refreshOnInsertMode": false,
+	"diagnostic.errorSign": "•",
+	"diagnostic.warningSign": "⚠",
+	"diagnostic.infoSign": "•",
+	"snippets.ultisnips.enable": true,
+	"snippets.ultisnips.directories": [
+		"$HOME/.vim/plugin_ultisnips/"
+	],
+	"snippets.userSnippetsDirectory": "~/.vim/user_snippets/",
+	"suggest.snippetIndicator": " ⯈",
+	"suggest.maxCompleteItemCount": 20,
+	"suggest.echodocSupport": false,
+	"suggest.completionItemKindLabels": {
+		"function": "\uf794",
+		"method": "\uf6a6",
+		"variable": "\u03bd",
+		"constant": "\uf8ff",
+		"struct": "\ufb44",
+		"class": "\uf0e8",
+		"interface": "\ufa52",
+		"text": "\ue612",
+		"enum": "\uf435",
+		"enumMember": "\uf02b",
+		"module": "\uf668",
+		"color": "\ue22b",
+		"property": "\ufab6",
+		"field": "\u1405",
+		"unit": "\uf475",
+		"file": "\uf471",
+		"value": "\uf8a3",
+		"event": "\ufacd",
+		"folder": "\uf115",
+		"keyword": "\uf893",
+		"snippet": "\uf64d",
+		"operator": "\u25c9",
+		"reference": "\uf87a",
+		"typeParameter": "\uf278",
+		"default": "\uf29c"
+	},
+	"css.validate": false,
+	"scss.validate": false,
+	"html.format.enable": true,
+	"html.validate.html": false,
+	"html.validate.styles": false,
+	"html.validate.scripts": false,
+	"tsserver.enableJavascript": true,
+	"typescript.validate.enable": false,
+	"javascript.validate.enable": false,
+	"emmet.includeLanguages": {
+		"javascript": "javascriptreact"
+	},
+	"eslint.filetypes": ["javascript", "typescript", "typescriptreact", "javascriptreact", "typescript.tsx",  "javascript.jsx"],
+	"eslint.autoFix": false,
+	"eslint.autoFixOnSave": true,
+	"prettier.statusItemText": "★ ",
+	"prettier.eslintIntegration": true,
+	"prettier.tslintIntegration": true,
+	"prettier.stylelintIntegration": true,
+	"json.schemas": [
+		{
+			"https://json.schemastore.org/composer": "/composer.json",
+			"https://json.schemastore.org/package": "/package.json"
+		}
+	],
+	"yaml.format.enable": true,
+	"yaml.hover": true,
+	"yaml.schemas": {
+		"https://json.schemastore.org/ansible-stable-2.5": "/*.yml",
+		"https://raw.githubusercontent.com/awslabs/goformation/master/schema/cloudformation.schema.json": "/*.yml",
+		"https://json.schemastore.org/circleciconfig": "/.circleci/config.yml",
+		"https://raw.githubusercontent.com/docker/compose/master/compose/config/config_schema_v3.0.json": "/*.yml"
+	},
+	"java.errors.incompleteClasspath.severity": "ignore",
+	"python.linting.enabled": false,
+	"python.jediEnabled": false,
+	"intelephense.files.maxSize": 5000000
+}

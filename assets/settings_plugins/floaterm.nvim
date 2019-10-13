@@ -1,0 +1,19 @@
+""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Floaterm
+""""""""""""""""""""""""""""""""""""""""""""""""""
+if &runtimepath =~ 'vim-floaterm' && has('nvim')
+	" Display Settings:
+	let g:floaterm_position = 'auto'
+	" Keymappings:
+	noremap  <silent> <leader>sh :FloatermToggle<CR>i
+	noremap! <silent> <leader>sh <Esc>:FloatermToggle<CR>i
+	tnoremap <silent> <leader>sh <C-\><C-n>:FloatermToggle<CR>
+
+	" Workaround: Starify
+	" autocmd User Startified setlocal buflisted
+else
+	noremap  <silent> <leader>sh <nop>
+	noremap! <silent> <leader>sh <nop>
+	tnoremap <silent> <leader>sh <nop>
+
+endif
